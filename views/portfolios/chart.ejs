@@ -1,0 +1,8 @@
+<%- include('../partials/header') %> 
+<nav>
+    <a href="/portfolios/" <%- title === 'Dashboard' ? 'class="active"' : '' %>>Dashboard</a>
+    <a href="/portfolios/chart" <%- title === 'Chart' ? 'class="active"' : '' %>>Chart</a>
+</nav>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+<%- include('../partials/footer') %> 
