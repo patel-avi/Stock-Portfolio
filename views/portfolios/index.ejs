@@ -6,4 +6,10 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <a href="/logout">Logout</a>
+    <% portfolios.forEach(function(portfolio) { %> 
+        <a href="/portfolios/<%= portfolio.id%>">Portfolio <%= portfolio.portfolioID %></a>
+    <%   }); %> 
+    <form id="add-portfolio" actions="/portfolios" method="POST">
+        <button>Add portfolio</button>
+    </form>
 <%- include('../partials/footer') %> 
