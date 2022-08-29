@@ -1,12 +1,39 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const portfolioSchema = new Schema({
-  portfolioID: String,
-  userID: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+const holdingSchema = new Schema({
+  symbol: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+  },
+  avgCost: {
+    type: Number,
+  },
+  price: {
+    type: Number,
+  },
+  marketValue: {
+    type: Number,
+  },
+  unrealizedGL: {
+    type: Number,
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+const portfolioSchema = new Schema(
+  {
+    portfolioID: String,
+    holdings: [holdingSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model("Portfolio", portfolioSchema);
