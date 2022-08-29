@@ -52,5 +52,15 @@ function search(req, res, next) {
 }
 
 function show(req, res, next) {
-  res.render("portfolios/show", { title: "Dashboard", newPortfolio });
+  Portfolio.findById(req.params.id, function (err, portfolio) {
+    console.log(req.params.id);
+    Holding.find({ portfolio: portfolio._id }, function (err, holdings) {
+      console.log(portfolio._id);
+      res.render("portfolios/show", {
+        title: "Dashboard",
+        portfolio,
+        holdings,
+      });
+    });
+  });
 }
