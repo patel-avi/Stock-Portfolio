@@ -1,0 +1,34 @@
+<%- include('../partials/header') %> 
+<%= title %>
+<h2>Holdings</h2>
+<% if (holdings.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Stock Symbol</th>
+          <th>Security Name</th>
+          <th>Quantity</th>
+          <th>Average Cost</th>
+          <th>Price</th>
+          <th>Market Value</th>
+          <th>Unrealized Gain/Loss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% holdings.forEach(function(holding) { %>
+          <tr>
+            <td><%= holding.symbol %></td>
+            <td><%= holding.name %></td>
+            <td><%= holding.quantity %></td>
+            <td><%= holding.avgCost %></td>
+            <td><%= holding.price %></td>
+            <td><%= holding.marketValue %></td>
+            <td><%= holding.unrealizedGL %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <h5>No Holdings Yet</h5>
+  <% } %>
+  <%- include('../partials/footer') %> 
