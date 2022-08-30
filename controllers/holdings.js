@@ -1,4 +1,5 @@
 const Portfolio = require("../models/portfolio");
+const Holding = require("../models/holding");
 
 module.exports = {
   index,
@@ -36,23 +37,11 @@ function index(req, res) {
 }
 
 function create(req, res) {
-  //   req.body.portfolio = req.params.id;
-  //   //   console.log(req.body);
-  //   const holding = new Holding(req.body);
-  //   ticket.save(function (err) {
-  //     if (err) return res.redirect("/tickets/new");
-  //     // console.log(ticket);
-  //     res.redirect(`/flights/${req.params.id}`);
-  //   });
-
-  Portfolio.findById(req.params.id, function (err, portfolio) {
-    portfolio.holdings.push(req.body);
-    portfolio.save(function (err) {
-      // if (err) {
-      //   console.log(err);
-      // }
-      // console.log(flight);
-      res.redirect(`/portfolio/${req.params.id}`);
-    });
+  req.body.portfolio = req.params.id;
+  console.log(req.body);
+  const holding = new Holding(req.body);
+  holding.save(function (err) {
+    if (err) return res.redirect("/holdings/new");
+    res.redirect(`/portfolios/${req.params.id}`);
   });
 }
