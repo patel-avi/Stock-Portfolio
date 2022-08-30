@@ -4,7 +4,6 @@ const portfoliosCtrl = require("../controllers/portfolios");
 
 /* GET users listing. */
 router.get("/", portfoliosCtrl.index);
-// router.get("/new", portfoliosCtrl.new);
 router.post("/", portfoliosCtrl.new);
 router.get("/:id", portfoliosCtrl.show);
 
