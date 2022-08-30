@@ -1,0 +1,15 @@
+<%- include('../partials/header') %> 
+
+        <div>Stock: <%= holding.symbol %> - <%= holding.name %></div>
+        <form id="update-holding" action="/portfolios/<%=portfolio._id%>/holdings/<%= holding._id %>?_method=PUT" method="POST">
+            <label>Quantity:</label>
+            <input type="number" name="quantity">
+            <label>Average Cost:</label>
+            <input type="number" name="avgCost">
+            <button>Update</button>
+        <div>Price: <%= holding.price %></div>
+        <div>Market Value: <%= holding.marketValue %></div>
+        <div>Unrealized Gain/Loss: <%= holding.unrealizedGL %></div>
+        </form>
+
+<%- include('../partials/footer') %> 
