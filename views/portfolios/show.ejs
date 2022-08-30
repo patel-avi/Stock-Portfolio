@@ -31,4 +31,17 @@
   <% } else { %>
     <h5>No Holdings Yet</h5>
   <% } %>
+
+  <form id="add-holding" method="POST" action="/portfolios/<%= portfolio.id %>/holdings">
+    <label>Symbol:</label>
+    <input type="text" name="symbol">
+    <label>Quantity:</label>
+    <input type="number" name="quantity">
+    <label>Average Cost:</label>
+    <input type="number" name="avgCost">
+    <label>Market Value:</label>
+    <input type="number" name="marketValue">
+    <input type="submit" value="Add holding">
+    </form>
+
   <%- include('../partials/footer') %> 
