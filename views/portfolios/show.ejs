@@ -17,7 +17,7 @@
       <tbody>
         <% holdings.forEach(function(holding) { %>
           <tr>
-            <td><%= holding.symbol %></td>
+            <td><a href="/portfolios/<%= portfolio.id %>/holdings/<%= holding.id %>/edit"><%= holding.symbol %></a></td>
             <td><%= holding.name %></td>
             <td><%= holding.quantity %></td>
             <td><%= holding.avgCost %></td>
