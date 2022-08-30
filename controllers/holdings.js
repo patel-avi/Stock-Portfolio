@@ -7,12 +7,13 @@ module.exports = {
   create,
   edit,
   update,
+  delete: deleteHolding,
 };
 
 const token = process.env.APIKEY;
 const rootURL = "https://www.alphavantage.co/";
 // var symbol = "IBM";
-// var keywords = "tesco";
+var keywords = "tesco";
 let date = "2022-08-26";
 // replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 // var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=${process.env.apikey}`;
@@ -58,10 +59,9 @@ function search(keywords) {
 
 function create(req, res) {
   req.body.portfolio = req.params.id;
-  // search(req.body.symbol);
   const holding = new Holding(req.body);
   holding.marketValue = holding.quantity * holding.avgCost;
-  updatePrice("ibm", date, function (price) {
+  updatePrice(holding.symbol, date, function (price) {
     holding.price = price;
     holding.unrealizedGL = holding.quantity * (price - holding.avgCost);
     holding.save(function (err) {
@@ -93,5 +93,12 @@ function update(req, res) {
         res.redirect(`/portfolios/${req.params.id}`);
       });
     });
+  });
+}
+
+function deleteHolding(req, res) {
+  Holding.deleteOne({ id: req.params.id2 }, function (err) {
+    console.log(err);
+    res.redirect(`/portfolios/${req.params.id}`);
   });
 }
