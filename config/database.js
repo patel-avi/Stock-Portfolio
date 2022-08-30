@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost", {
+  dbName: "Stock-Portfolio",
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
