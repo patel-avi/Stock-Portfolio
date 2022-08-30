@@ -1,5 +1,3 @@
-"use strict";
-var request = require("request");
 const User = require("../models/user");
 const Holding = require("../models/holding");
 const Portfolio = require("../models/portfolio");
@@ -7,7 +5,6 @@ const Portfolio = require("../models/portfolio");
 module.exports = {
   index,
   new: newPortfolio,
-  search,
   show,
 };
 
@@ -31,24 +28,6 @@ function newPortfolio(req, res) {
     res.redirect("/portfolios/");
   });
   // res.redirect(`/portfolios/${req.params.id}`);
-}
-
-function search(req, res, next) {
-  const options = {
-    url: `${rootURL}/query?function=SYMBOL_SEARCH&keywords=${keywords}&apikey=${process.env.apikey}`,
-    json: true,
-    headers: { "User-Agent": "request" },
-  };
-  request.get(options, function (err, res, data) {
-    if (err) {
-      console.log("Error:", err);
-    } else if (res.statusCode !== 200) {
-      console.log("Status:", res.statusCode);
-    } else {
-      // data is successfully parsed as a JSON object:
-      console.log(data);
-    }
-  });
 }
 
 function show(req, res, next) {
