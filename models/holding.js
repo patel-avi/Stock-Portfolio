@@ -24,6 +24,10 @@ const holdingSchema = new Schema({
   unrealizedGL: {
     type: Number,
   },
+  portfolio: {
+    type: Schema.Types.ObjectId,
+    ref: "Portfolio",
+  },
 });
 
 module.exports = mongoose.model("Holding", holdingSchema);
