@@ -8,6 +8,7 @@ var passport = require("passport");
 
 var indexRouter = require("./routes/index");
 var portfoliosRouter = require("./routes/portfolios");
+var holdingsRouter = require("./routes/holdings");
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use(passport.session());
 
 app.use("/", indexRouter);
 app.use("/portfolios", portfoliosRouter);
+app.use("/", holdingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
