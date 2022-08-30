@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var session = require("express-session");
 var passport = require("passport");
+var methodOverride = require("method-override");
 
 var indexRouter = require("./routes/index");
 var portfoliosRouter = require("./routes/portfolios");
@@ -33,6 +34,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride("_method"));
 
 app.use("/", indexRouter);
 app.use("/portfolios", portfoliosRouter);
