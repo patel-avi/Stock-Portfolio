@@ -13,7 +13,7 @@ module.exports = {
 const token = process.env.APIKEY;
 const rootURL = "https://www.alphavantage.co/";
 // var symbol = "IBM";
-var keywords = "tesco";
+// var keywords = "tesco";
 let date = "2022-08-26";
 // replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 // var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=${process.env.apikey}`;
@@ -60,10 +60,13 @@ function search(keywords) {
 function create(req, res) {
   req.body.portfolio = req.params.id;
   const holding = new Holding(req.body);
-  holding.marketValue = holding.quantity * holding.avgCost;
+  holding.marketValue = (holding.quantity * holding.avgCost).toFixed(2);
   updatePrice(holding.symbol, date, function (price) {
     holding.price = price;
-    holding.unrealizedGL = holding.quantity * (price - holding.avgCost);
+    holding.unrealizedGL = (
+      holding.quantity *
+      (price - holding.avgCost)
+    ).toFixed(2);
     holding.save(function (err) {
       if (err) return console.log(err);
       res.redirect(`/portfolios/${req.params.id}`);
@@ -88,9 +91,17 @@ function update(req, res) {
       // console.log(req.params.id2);
       holding.quantity = req.body.quantity;
       holding.avgCost = req.body.avgCost;
-      holding.save(function (err) {
-        if (err) return console.log(err);
-        res.redirect(`/portfolios/${req.params.id}`);
+      holding.marketValue = (holding.quantity * holding.avgCost).toFixed(2);
+      updatePrice(holding.symbol, date, function (price) {
+        holding.price = price;
+        holding.unrealizedGL = (
+          holding.quantity *
+          (price - holding.avgCost)
+        ).toFixed(2);
+        holding.save(function (err) {
+          if (err) return console.log(err);
+          res.redirect(`/portfolios/${req.params.id}`);
+        });
       });
     });
   });
