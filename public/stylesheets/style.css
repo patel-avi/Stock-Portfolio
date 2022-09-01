@@ -1,8 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100vh;
+}
+
+.container {
+  height:100%;
 }
 
 a {
-  color: #00B7FF;
+  color: black;
+  text-decoration: none;
+}
+
+.title {
+  padding: 10px 0 30px 0;
+}
+
+.cyan {
+  background-color: #0097A7;
+  color: white
+}
+
+nav {
+  background-color: #0097A7;
+  color: white;
+  display: flex;
+}
+
+nav > a {
+  margin: 5px 15px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+}
+
+nav > a:hover {
+  color: white;
+  background-color: #424748;
+}
+
+nav > a.active {
+  color: white;
+}
+
+.cyan-text {
+  color: #0097A7;
+}
+
+#add-portfolio {
+  padding-top: 16px;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 75vh;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.table {
+  background-color: #E0F7FA;
+  border-radius: 10px;
+}
+
+#add-holding {
+  background-color: #E0F7FA;
+  border-radius: 0 0 10px 10px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.update-holding {
+  background-color: #E0F7FA;
+}
+
+.update-holding > .card-title {
+  background-color: #0097A7;
+  border-radius: 10px 10px 0 0;
+}
+
+.card {
+  border-radius: 10px;
 }
