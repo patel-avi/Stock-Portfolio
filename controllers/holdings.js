@@ -1,22 +1,26 @@
+"use strict";
+var request = require("request");
 const Portfolio = require("../models/portfolio");
 const Holding = require("../models/holding");
 
 module.exports = {
-  index,
   create,
+  edit,
+  update,
+  delete: deleteHolding,
 };
 
 const token = process.env.APIKEY;
 const rootURL = "https://www.alphavantage.co/";
-var symbol = "IBM";
-var keywords = "tesco";
+// var symbol = "IBM";
+// var keywords = "tesco";
 let date = "2022-08-26";
 // replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 // var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=${process.env.apikey}`;
 
-function index(req, res) {
+function updatePrice(symbol, date, fn) {
   const options = {
-    url: `${rootURL}/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=demo`,
+    url: `${rootURL}/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${token}`,
     json: true,
     headers: { "User-Agent": "request" },
   };
@@ -27,21 +31,85 @@ function index(req, res) {
       console.log("Status:", res.statusCode);
     } else {
       // data is successfully parsed as a JSON object:
-      let holding1 = data["Time Series (Daily)"][date]["4. close"];
+      let price = data["Time Series (Daily)"][date]["4. close"];
+      fn(price);
     }
   });
+}
 
-  let holdings = Holding.find({ symbol: "IBM" });
-  console.log(holdings);
-  res.render("/portfolios/show", {});
+function search(keywords) {
+  const options = {
+    url: `${rootURL}/query?function=SYMBOL_SEARCH&keywords=${keywords}&apikey=${process.env.apikey}`,
+    json: true,
+    headers: { "User-Agent": "request" },
+  };
+  request.get(options, function (err, res, data) {
+    if (err) {
+      console.log("Error:", err);
+    } else if (res.statusCode !== 200) {
+      console.log("Status:", res.statusCode);
+    } else {
+      // data is successfully parsed as a JSON object:
+      // console.log(data);
+      console.log(data["bestMatches"][0]["1. symbol"]);
+      console.log(data["bestMatches"][0]["2. name"]);
+    }
+  });
 }
 
 function create(req, res) {
   req.body.portfolio = req.params.id;
-  console.log(req.body);
   const holding = new Holding(req.body);
-  holding.save(function (err) {
-    if (err) return res.redirect("/holdings/new");
+  holding.marketValue = (holding.quantity * holding.avgCost).toFixed(2);
+  updatePrice(holding.symbol, date, function (price) {
+    holding.price = price;
+    holding.unrealizedGL = (
+      holding.quantity *
+      (price - holding.avgCost)
+    ).toFixed(2);
+    holding.save(function (err) {
+      if (err) return console.log(err);
+      res.redirect(`/portfolios/${req.params.id}`);
+    });
+  });
+}
+
+function edit(req, res) {
+  Portfolio.findById(req.params.id, function (err, portfolio) {
+    // console.log(req.params.id);
+    Holding.findById(req.params.id2, function (err, holding) {
+      // console.log(req.params.id2);
+      res.render("holdings/edit", { holding, portfolio });
+    });
+  });
+}
+
+function update(req, res) {
+  Portfolio.findById(req.params.id, function (err, portfolio) {
+    // console.log(req.params.id);
+    Holding.findById(req.params.id2, function (err, holding) {
+      // console.log(req.params.id2);
+      holding.quantity = req.body.quantity;
+      holding.avgCost = req.body.avgCost;
+      holding.marketValue = (holding.quantity * holding.avgCost).toFixed(2);
+      updatePrice(holding.symbol, date, function (price) {
+        holding.price = price;
+        holding.unrealizedGL = (
+          holding.quantity *
+          (price - holding.avgCost)
+        ).toFixed(2);
+        holding.save(function (err) {
+          if (err) return console.log(err);
+          res.redirect(`/portfolios/${req.params.id}`);
+        });
+      });
+    });
+  });
+}
+
+function deleteHolding(req, res) {
+  Holding.deleteOne({ id: req.params.id2 }, function (err) {
+    console.log(err);
     res.redirect(`/portfolios/${req.params.id}`);
   });
 }

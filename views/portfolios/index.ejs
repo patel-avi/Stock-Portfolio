@@ -1,15 +1,21 @@
 <%- include('../partials/header') %> 
-<nav>
-    <a href="/portfolios/" <%- title === 'Dashboard' ? 'class="active"' : '' %>>Dashboard</a>
-    <a href="/portfolios/chart" <%- title === 'Chart' ? 'class="active"' : '' %>>Chart</a>
+<nav class="navbar justify-content-end">
+    <a href="/logout" id="logout-right">Logout</a>
 </nav>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href="/logout">Logout</a>
-    <% portfolios.forEach(function(portfolio) { %> 
-        <a href="/portfolios/<%= portfolio.id%>">Portfolio <%= portfolio.portfolioID %></a>
-    <%   }); %> 
-    <form id="add-portfolio" actions="/portfolios" method="POST">
-        <button>Add Portfolio</button>
-    </form>
+<div class="bg-image" 
+     style="background-image: url('https://images.unsplash.com/photo-1521080755838-d2311117f767?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2162&q=80');
+            height: 100vh">
+<div class="container d-flex flex-column align-items-center justify-content-center">
+    <div class="card text-center">
+    <div class="card-body">
+        <h5 class="card-title cyan-text">SELECT A PORTFOLIO:</h5>
+        <% portfolios.forEach(function(portfolio) { %> 
+            <a href="/portfolios/<%= portfolio.id%>" class="row card-text justify-content-center">Portfolio <%= portfolio.portfolioID %></a>
+        <%   }); %> 
+        <form id="add-portfolio" actions="/portfolios" method="POST">
+            <button class="btn cyan">Add Portfolio</button>
+        </form>
+    </div>
+</div>
+</div>
 <%- include('../partials/footer') %> 

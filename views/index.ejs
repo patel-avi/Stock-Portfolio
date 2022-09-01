@@ -1,5 +1,17 @@
 <%- include('./partials/header') %> 
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-        <a href="/auth/google">Login with Google</a>
+<div class="bg-image" 
+     style="background-image: url('https://images.unsplash.com/photo-1521080755838-d2311117f767?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2162&q=80');
+            height: 100vh">
+        <div class="container d-flex flex-column align-items-center justify-content-center">
+    <div class="card text-center" style="width: 28rem;">
+        <div class="row title"><h1>Stockfolio</h1></div>
+        <div class="card-body">
+            <h5 class="card-title">Welcome to your stock portfolio!</h5>
+            <p class="card-text">Log in to get started</p>
+            <a href="/auth/google" class="btn cyan">Log in with Google</a>
+        </div>
+    </div>
+</div>    
+</div>
+
 <%- include('./partials/footer') %> 
