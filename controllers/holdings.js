@@ -12,8 +12,6 @@ module.exports = {
 
 const token = process.env.APIKEY;
 const rootURL = "https://www.alphavantage.co/";
-// var symbol = "IBM";
-// var keywords = "tesco";
 let date = "2022-08-26";
 // replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 // var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=${process.env.apikey}`;
@@ -37,7 +35,7 @@ function updatePrice(symbol, date, fn) {
   });
 }
 
-function search(keywords) {
+function search(keywords, fn) {
   const options = {
     url: `${rootURL}/query?function=SYMBOL_SEARCH&keywords=${keywords}&apikey=${process.env.apikey}`,
     json: true,
@@ -50,9 +48,8 @@ function search(keywords) {
       console.log("Status:", res.statusCode);
     } else {
       // data is successfully parsed as a JSON object:
-      // console.log(data);
-      console.log(data["bestMatches"][0]["1. symbol"]);
-      console.log(data["bestMatches"][0]["2. name"]);
+      let name = data["bestMatches"][0]["2. name"];
+      fn(name);
     }
   });
 }
@@ -67,18 +64,19 @@ function create(req, res) {
       holding.quantity *
       (price - holding.avgCost)
     ).toFixed(2);
-    holding.save(function (err) {
-      if (err) return console.log(err);
-      res.redirect(`/portfolios/${req.params.id}`);
+    search(holding.symbol, function (name) {
+      holding.name = name;
+      holding.save(function (err) {
+        if (err) return console.log(err);
+        res.redirect(`/portfolios/${req.params.id}`);
+      });
     });
   });
 }
 
 function edit(req, res) {
   Portfolio.findById(req.params.id, function (err, portfolio) {
-    // console.log(req.params.id);
     Holding.findById(req.params.id2, function (err, holding) {
-      // console.log(req.params.id2);
       res.render("holdings/edit", { holding, portfolio });
     });
   });
@@ -86,9 +84,7 @@ function edit(req, res) {
 
 function update(req, res) {
   Portfolio.findById(req.params.id, function (err, portfolio) {
-    // console.log(req.params.id);
     Holding.findById(req.params.id2, function (err, holding) {
-      // console.log(req.params.id2);
       holding.quantity = req.body.quantity;
       holding.avgCost = req.body.avgCost;
       holding.marketValue = (holding.quantity * holding.avgCost).toFixed(2);
@@ -108,7 +104,7 @@ function update(req, res) {
 }
 
 function deleteHolding(req, res) {
-  Holding.deleteOne({ id: req.params.id2 }, function (err) {
+  Holding.deleteOne({ _id: req.params.id2 }, function (err) {
     console.log(err);
     res.redirect(`/portfolios/${req.params.id}`);
   });
