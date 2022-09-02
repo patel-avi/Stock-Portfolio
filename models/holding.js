@@ -11,18 +11,20 @@ const holdingSchema = new Schema({
   },
   quantity: {
     type: Number,
+    required: true,
   },
   avgCost: {
-    type: Number,
+    type: mongoose.Types.Decimal128,
+    required: true,
   },
   price: {
     type: Number,
   },
   marketValue: {
-    type: Number,
+    type: mongoose.Types.Decimal128,
   },
   unrealizedGL: {
-    type: Number,
+    type: mongoose.Types.Decimal128,
   },
   portfolio: {
     type: Schema.Types.ObjectId,
