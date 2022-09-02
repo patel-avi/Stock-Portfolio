@@ -28,10 +28,10 @@
             <td><a href="/portfolios/<%= portfolio.id %>/holdings/<%= holding.id %>/edit"><%= holding.symbol %></a></td>
             <td><%= holding.name %></td>
             <td><%= holding.quantity %></td>
-            <td><%= holding.avgCost %></td>
-            <td><%= holding.price %></td>
-            <td><%= holding.marketValue %></td>
-            <td><%= holding.unrealizedGL %></td>
+            <td>$<%= holding.avgCost %></td>
+            <td>$<%= holding.price %></td>
+            <td>$<%= holding.marketValue %></td>
+            <td>$<%= holding.unrealizedGL %></td>
           </tr>
         <% }); %>
       </tbody>
@@ -40,14 +40,14 @@
   <% } else { %>
     <h5>No Holdings Yet</h5>
   <% } %>
-  <form id="add-holding" method="POST" action="/portfolios/<%= portfolio.id %>/holdings" class="input-group-text">
+  <form id="add-holding" method="POST" action="/portfolios/<%= portfolio.id %>/holdings" class="input-group-text" autocomplete="off">
     <div class="input-group mb-3">
       <span class="input-group-text">Symbol:</span>
-      <input type="text" name="symbol" class="form-control" >
+      <input type="text" name="symbol" class="form-control" required>
       <span class="input-group-text">Quantity:</span>
-      <input type="number" name="quantity" class="form-control">
+      <input type="number" name="quantity" class="form-control" required>
       <span class="input-group-text">Average Cost:</span>
-      <input type="number" name="avgCost" class="form-control">
+      <input type="text" name="avgCost" class="form-control" required>
       <input type="submit" value="Add holding" class="btn cyan btn-outline-secondary">
     </div>
     <!-- <input type="number" name="marketValue" class="form-control"> -->
