@@ -57,7 +57,7 @@ nav > a.active {
 
 .my-custom-scrollbar {
   position: relative;
-  height: 75vh;
+  max-height: 75vh;
   overflow: auto;
 }
 .table-wrapper-scroll-y {
@@ -66,7 +66,7 @@ nav > a.active {
 
 .table {
   background-color: #E0F7FA;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
 }
 
 #add-holding {
