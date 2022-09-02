@@ -27,13 +27,13 @@
         <div class="mb-3 row">
             <label class="col-sm-6 col-form-label">Quantity:</label>
             <div class="col-sm-6">
-                <input type="number" name="quantity" class="form-control" placeholder="<%=holding.quantity%>">
+                <input type="number" name="quantity" class="form-control" placeholder="<%=holding.quantity%>" required>
             </div>
         </div>
         <div class="mb-4 row ">
             <label class="col-sm-6 col-form-label">Average Cost:</label>
             <div class="col-sm-6">
-                <input type="number" name="avgCost" class="form-control" placeholder="<%=holding.avgCost%>">
+                <input type="text" name="avgCost" class="form-control" placeholder="<%=holding.avgCost%>" required>
             </div>
         </div>
         <div class="row text-center">
@@ -46,8 +46,8 @@
         <div class="col-sm-12">
             <form id="delete-holding" action="/portfolios/<%=portfolio._id%>/holdings/<%=holding._id%>?_method=DELETE" method="POST">
             <button type="submit" class="btn cyan btn-outline-secondary">Delete</button>
-        </div>
         </form>  
+        </div>
     </div>
     </div>
 </div>
