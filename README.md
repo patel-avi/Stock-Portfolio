@@ -4,7 +4,7 @@ Welcome to your stock portfolio app! Here you can create multiple portfolios and
 
 ## Getting Started
 
-https://stock-portfolio1.herokuapp.com/
+https://stockfolio-m4eh.onrender.com
 
 ![homepage-screenshot](images/homepage-screenshot.png)
 
